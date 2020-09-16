@@ -30,4 +30,12 @@ RSpec.describe Deck do
     expect(@deck.cards).to eql([@card2, @card3])
   end
 
+  it "can add a card to the bottom of the deck" do
+    expect(@deck.cards).to eql([@card1, @card2, @card3])
+    card4 = Card.new(:club, '5', 5)
+    @deck.add_card(card4)
+    expect(@deck.cards).to eql([@card1, @card2, @card3, card4])
+
+  end
+
 end

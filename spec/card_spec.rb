@@ -9,7 +9,7 @@ RSpec.describe Card do
     expect(@card).to be_an_instance_of(Card)
   end
 
-  it "has_readable_attributes" do
+  it "has readable attributes" do
     expect(@card.suit).to eql(:diamond)
     expect(@card.value).to eql('Queen')
     expect(@card.rank).to eql(12)

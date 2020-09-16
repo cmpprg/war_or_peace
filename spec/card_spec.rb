@@ -1,5 +1,3 @@
-require '../lib/card'
-
 RSpec.describe Card do
   before do
     @card = Card.new(:diamond, 'Queen', 12)

@@ -23,4 +23,11 @@ RSpec.describe Deck do
   it "can return an array of cards whose rank are at or above 11" do
     expect(@deck.high_ranking_cards).to eql([@card1, @card3])
   end
+
+  it "can remove the top card from the deck" do
+    expect(@deck.cards).to eql([@card1, @card2, @card3])
+    expect(@deck.remove_card).to eql(@card1)
+    expect(@deck.cards).to eql([@card2, @card3])
+  end
+
 end

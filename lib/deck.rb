@@ -14,4 +14,8 @@ class Deck
       card.rank >= 11
     end
   end
+
+  def remove_card
+    @cards.shift
+  end
 end

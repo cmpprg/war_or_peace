@@ -19,4 +19,8 @@ RSpec.describe Deck do
     expect(@deck.rank_of_card(0)).to eql(12)
     expect(@deck.rank_of_card(2)).to eql(14)
   end
+
+  it "can return an array of cards whose rank are above 11" do
+    expect(@deck.high_ranking_cards).to eql([@card1, @card3])
+  end
 end

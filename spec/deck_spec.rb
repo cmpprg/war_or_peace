@@ -14,4 +14,9 @@ RSpec.describe Deck do
   it "has readable attributes" do
     expect(@deck.cards).to eql(@cards)
   end
+
+  it "can find the rank of card at index position" do
+    expect(@deck.rank_of_card(0)).to eql(12)
+    expect(@deck.rank_of_card(2)).to eql(14)
+  end
 end

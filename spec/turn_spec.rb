@@ -99,4 +99,23 @@ RSpec.describe Turn do
     expect(@player1.deck.rank_of_card(2) == @player2.deck.rank_of_card(2)).to be(true)
     expect(@turn.winner).to eql('No Winner')
   end
+
+  it "can pile up cards into the spoils of war array attribute for a :basic turn" do
+    setup_basic_type_turn
+
+    expect(@player1.deck.cards.length).to eql(4)
+    expect(@player2.deck.cards.length).to eql(4)
+    expect(@player1.deck.cards.first).to be(@card1)
+    expect(@player2.deck.cards.first).to be(@card5)
+    expect(@turn.spoils_of_war).to eql([])
+
+    @turn.pile_cards
+
+    expect(@player1.deck.cards.length).to eql(3)
+    expect(@player2.deck.cards.length).to eql(3)
+    expect(@player1.deck.cards).not_to include(@card1)
+    expect(@player2.deck.cards).not_to include(@card5)
+    expect(@turn.spoils_of_war).to contain_exactly(@card1, @card5)
+
+  end
 end

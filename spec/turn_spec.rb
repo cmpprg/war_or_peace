@@ -167,4 +167,22 @@ RSpec.describe Turn do
     expect(@player2.deck.cards).not_to include(@card5, @card6, @card7)
     expect(@turn.spoils_of_war).to eql([])
   end
+
+  it "can award the spoils of war to the victor" do
+    setup_basic_type_turn
+
+    expect(@turn.player1.deck.cards).to contain_exactly(@card1, @card2, @card3, @card4)
+    expect(@turn.spoils_of_war).to eql([])
+
+    @turn.pile_cards
+
+    expect(@turn.player1.deck.cards).to contain_exactly(@card2, @card3, @card4)
+    expect(@turn.spoils_of_war).to contain_exactly(@card1, @card5)
+
+    @turn.award_spoils
+
+    expect(@turn.spoils_of_war).to eql([])
+    expect(@turn.player1.deck.cards.length).to eql(5)
+    expect(@turn.player1.deck.cards.last(2)).to contain_exactly(@card1, @card5)
+  end
 end

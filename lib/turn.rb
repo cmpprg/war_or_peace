@@ -62,7 +62,8 @@ class Turn
   end
 
   def determine_winner_if_type(type)
-    compare_ranks(card_ranks_at(index_at_type(type))) == 1 ? @player1 : @player2
+    reutnr @player1 if compare_ranks(card_ranks_at(index_at_type(type))) == 1
+    @player2
   end
 
   def index_at_type(type_of_turn)

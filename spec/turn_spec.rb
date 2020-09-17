@@ -103,6 +103,7 @@ RSpec.describe Turn do
   it "can pile up cards into the spoils of war array attribute for a :basic turn" do
     setup_basic_type_turn
 
+    expect(@turn.type).to eql(:basic)
     expect(@player1.deck.cards.length).to eql(4)
     expect(@player2.deck.cards.length).to eql(4)
     expect(@player1.deck.cards.first).to be(@card1)
@@ -121,6 +122,7 @@ RSpec.describe Turn do
   it "can pile up cards into the spoils of war arry attribute for a :war turn" do
     setup_war_type_turn
 
+    expect(@turn.type).to eql(:war)
     expect(@player1.deck.cards.length).to eql(4)
     expect(@player2.deck.cards.length).to eql(4)
     expect(@player1.deck.cards[0]).to be(@card1)
@@ -139,5 +141,30 @@ RSpec.describe Turn do
     expect(@player1.deck.cards).not_to include(@card1, @card2, @card3)
     expect(@player2.deck.cards).not_to include(@card5, @card6, @card7)
     expect(@turn.spoils_of_war).to contain_exactly(@card1, @card2, @card3, @card5, @card6, @card7)
+  end
+
+  it "can delete the first 3 cards from both players decks through the
+      pile cards method for :mutually_assured_destruction type turn" do
+    setup_mutually_assured_destruction_type_turn
+
+    expect(@turn.type).to eql(:mutually_assured_destruction)
+    expect(@player1.deck.cards.length).to eql(4)
+    expect(@player2.deck.cards.length).to eql(4)
+    expect(@player1.deck.cards[0]).to be(@card1)
+    expect(@player1.deck.cards[1]).to be(@card2)
+    expect(@player1.deck.cards[2]).to be(@card3)
+
+    expect(@player2.deck.cards[0]).to be(@card5)
+    expect(@player2.deck.cards[1]).to be(@card6)
+    expect(@player2.deck.cards[2]).to be(@card7)
+    expect(@turn.spoils_of_war).to eql([])
+
+    @turn.pile_cards
+
+    expect(@player1.deck.cards.length).to eql(1)
+    expect(@player2.deck.cards.length).to eql(1)
+    expect(@player1.deck.cards).not_to include(@card1, @card2, @card3)
+    expect(@player2.deck.cards).not_to include(@card5, @card6, @card7)
+    expect(@turn.spoils_of_war).to eql([])
   end
 end

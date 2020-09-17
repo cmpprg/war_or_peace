@@ -5,6 +5,14 @@ class Deck
     @cards = cards
   end
 
+  def remove_card
+    @cards.shift
+  end
+
+  def add_card(card)
+    @cards << card
+  end
+
   def rank_of_card(index)
     @cards[index].rank
   end
@@ -15,11 +23,4 @@ class Deck
     end
   end
 
-  def remove_card
-    @cards.shift
-  end
-
-  def add_card(card)
-    @cards << card
-  end
 end

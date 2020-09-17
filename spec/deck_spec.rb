@@ -35,7 +35,12 @@ RSpec.describe Deck do
     card4 = Card.new(:club, '5', 5)
     @deck.add_card(card4)
     expect(@deck.cards).to eql([@card1, @card2, @card3, card4])
+  end
 
+  it "can calculate what percent of the deck are high ranking" do
+    expect(@deck.percent_high_ranking).to eql(66.67)
+    @deck.remove_card
+    expect(@deck.percent_high_ranking).to eql(33.33)
   end
 
 end

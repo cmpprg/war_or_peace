@@ -25,21 +25,14 @@ class Turn
   end
 
   def pile_cards
-    if type == :basic
-      @spoils_of_war << @player1.deck.remove_card
-      @spoils_of_war << @player2.deck.remove_card
-    elsif type == :war
-      3.times do
-        @spoils_of_war << @player1.deck.remove_card
-        @spoils_of_war << @player2.deck.remove_card
-      end
-    else
-      3.times do
-        @player1.deck.remove_card
-        @player2.deck.remove_card
-      end
+    case type
+    when :basic
+      send_cards_to_spoils_of_war(1)
+    when :war
+      send_cards_to_spoils_of_war(3)
+    when :mutually_assured_destruction
+      remove_cards(3)
     end
-
   end
 
   private
@@ -61,7 +54,7 @@ class Turn
   end
 
   def card_ranks_at(index)
-    [ player1.deck.rank_of_card(index), player2.deck.rank_of_card(index) ]
+    [ @player1.deck.rank_of_card(index), @player2.deck.rank_of_card(index) ]
   end
 
   def compare_ranks(ranks)
@@ -74,6 +67,20 @@ class Turn
 
   def index_at_type(type_of_turn)
     type == :basic ? 0 : 2
+  end
+
+  def players
+    [ @player1, @player2 ]
+  end
+
+  def send_cards_to_spoils_of_war(quantity)
+    quantity.times do
+      players.each { |player| @spoils_of_war << player.deck.remove_card }
+    end
+  end
+
+  def remove_cards(quantity)
+    players.each { |player| player.deck.cards.slice!(0, quantity) }
   end
 
 end

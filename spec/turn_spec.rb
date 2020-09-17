@@ -56,27 +56,39 @@ RSpec.describe Turn do
     expect(turn.type).to eql(:basic)
   end
 
-  it "can determine who the winner of a :basic type turn is" do
+  it "can determine if player1 wins a :basic type turn" do
     setup_basic_type_turn
 
     expect(@turn.type).to eql(:basic)
     expect(@turn.player1.deck.rank_of_card(0)).to eql(11)
     expect(@turn.player2.deck.rank_of_card(0)).to eql(8)
-    expect(@turn.winner).to eql(@player1)
+    expect(@turn.winner).to be(@player1)
+  end
 
+  it "can determine if player2 wins a :basic type turn" do
     setup_basic_player_2_victor_type_turn
+
     expect(@turn.type).to eql(:basic)
     expect(@turn.player1.deck.rank_of_card(0)).to eql(11)
     expect(@turn.player2.deck.rank_of_card(0)).to eql(13)
-    expect(@turn.winner).to eql(@player2)
+    expect(@turn.winner).to be(@player2)
   end
 
-  # it "can determine who the winner of a :war type turn is" do
-  #   setup_war_type_turn
-  #
-  #   expect(@turn.type).to be(:war)
-  #   expect(@turn.player1.deck.rank_of_card(2)).to eql(9)
-  #   expect(@turn.player2.deck.rank_of_card(2)).to eql(3)
-  #   expect(@turn.winner).to eql(@player1)
-  # end
+  it "can determine if player 1 wins a :war type turn is" do
+    setup_war_type_turn
+
+    expect(@turn.type).to eql(:war)
+    expect(@turn.player1.deck.rank_of_card(2)).to eql(9)
+    expect(@turn.player2.deck.rank_of_card(2)).to eql(3)
+    expect(@turn.winner).to be(@player1)
+  end
+
+  it "can determine if player 2 wins a :war type turn is" do
+    setup_war_player_2_victor_type_turn
+
+    expect(@turn.type).to eql(:war)
+    expect(@turn.player1.deck.rank_of_card(2)).to eql(3)
+    expect(@turn.player2.deck.rank_of_card(2)).to eql(9)
+    expect(@turn.winner).to be(@player2)
+  end
 end

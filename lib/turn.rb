@@ -13,6 +13,22 @@ class Turn
     :basic
   end
 
+  def winner
+    first_ranks = card_ranks_at(0)
+    compare_first_ranks = first_ranks.first <=> first_ranks.last
+
+    third_ranks = card_ranks_at(2)
+    compare_third_ranks = third_ranks.first <=> third_ranks.last
+
+    if type == :basic
+      return @player1 if  compare_first_ranks == 1
+      @player2
+    elsif type == :war
+      return @player1 if compare_third_ranks == 1
+      @player2
+    end
+  end
+
   private
 
   def first_ranks_equal?

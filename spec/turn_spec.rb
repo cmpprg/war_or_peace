@@ -60,8 +60,8 @@ RSpec.describe Turn do
     setup_basic_type_turn
 
     expect(@turn.type).to eql(:basic)
-    expect(@turn.player1.deck.rank_of_card(0)).to eql(11)
-    expect(@turn.player2.deck.rank_of_card(0)).to eql(8)
+    expect(@player1.deck.rank_of_card(0)).to eql(11)
+    expect(@player2.deck.rank_of_card(0)).to eql(8)
     expect(@turn.winner).to be(@player1)
   end
 
@@ -69,8 +69,8 @@ RSpec.describe Turn do
     setup_basic_player_2_victor_type_turn
 
     expect(@turn.type).to eql(:basic)
-    expect(@turn.player1.deck.rank_of_card(0)).to eql(11)
-    expect(@turn.player2.deck.rank_of_card(0)).to eql(13)
+    expect(@player1.deck.rank_of_card(0)).to eql(11)
+    expect(@player2.deck.rank_of_card(0)).to eql(13)
     expect(@turn.winner).to be(@player2)
   end
 
@@ -78,8 +78,8 @@ RSpec.describe Turn do
     setup_war_type_turn
 
     expect(@turn.type).to eql(:war)
-    expect(@turn.player1.deck.rank_of_card(2)).to eql(9)
-    expect(@turn.player2.deck.rank_of_card(2)).to eql(3)
+    expect(@player1.deck.rank_of_card(2)).to eql(9)
+    expect(@player2.deck.rank_of_card(2)).to eql(3)
     expect(@turn.winner).to be(@player1)
   end
 
@@ -87,8 +87,16 @@ RSpec.describe Turn do
     setup_war_player_2_victor_type_turn
 
     expect(@turn.type).to eql(:war)
-    expect(@turn.player1.deck.rank_of_card(2)).to eql(3)
-    expect(@turn.player2.deck.rank_of_card(2)).to eql(9)
+    expect(@player1.deck.rank_of_card(2)).to eql(3)
+    expect(@player2.deck.rank_of_card(2)).to eql(9)
     expect(@turn.winner).to be(@player2)
+  end
+
+  it "can return 'No Winner' if :mutually_assured_destruction type turn" do
+    setup_mutually_assured_destruction_type_turn
+
+    expect(@turn.type).to eql(:mutually_assured_destruction)
+    expect(@player1.deck.rank_of_card(2) == @player2.deck.rank_of_card(2)).to be(true)
+    expect(@turn.winner).to eql('No Winner')
   end
 end

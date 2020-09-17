@@ -26,6 +26,8 @@ class Turn
     elsif type == :war
       return @player1 if compare_third_ranks == 1
       @player2
+    else
+      'No Winner'
     end
   end
 

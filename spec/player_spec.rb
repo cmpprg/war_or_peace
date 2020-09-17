@@ -15,4 +15,14 @@ RSpec.describe Player do
     expect(@player.name).to eql('Clarisa')
     expect(@player.deck).to eql(@deck)
   end
+
+  it "can determine if they have lost the game" do
+    expect(@player.has_lost?).to be(false)
+    @player.deck.remove_card
+    expect(@player.has_lost?).to be(false)
+    @player.deck.remove_card
+    expect(@player.has_lost?).to be(false)
+    @player.deck.remove_card
+    expect(@player.has_lost?).to be(true)
+  end
 end

@@ -14,19 +14,12 @@ class Turn
   end
 
   def winner
-    first_ranks = card_ranks_at(0)
-    compare_first_ranks = first_ranks.first <=> first_ranks.last
-
-    third_ranks = card_ranks_at(2)
-    compare_third_ranks = third_ranks.first <=> third_ranks.last
-
-    if type == :basic
-      return @player1 if  compare_first_ranks == 1
-      @player2
-    elsif type == :war
-      return @player1 if compare_third_ranks == 1
-      @player2
-    else
+    case type
+    when :basic
+      determine_winner_if_type(:basic)
+    when :war
+      determine_winner_if_type(:war)
+    when :mutually_assured_destruction
       'No Winner'
     end
   end
@@ -50,6 +43,19 @@ class Turn
   end
 
   def card_ranks_at(index)
-    [player1.deck.rank_of_card(index), player2.deck.rank_of_card(index)]
+    [ player1.deck.rank_of_card(index), player2.deck.rank_of_card(index) ]
   end
+
+  def compare_ranks(ranks)
+    ranks.first <=> ranks.last
+  end
+
+  def determine_winner_if_type(type)
+    compare_ranks(card_ranks_at(index_at_type(type))) == 1 ? @player1 : @player2
+  end
+
+  def index_at_type(type_of_turn)
+    type == :basic ? 0 : 2
+  end
+
 end

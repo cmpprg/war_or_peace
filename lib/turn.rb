@@ -8,11 +8,26 @@ class Turn
   end
 
   def type
-    first_cards = [player1.deck.rank_of_card(0), player2.deck.rank_of_card(0)]
-    third_cards = [player1.deck.rank_of_card(2), player2.deck.rank_of_card(2)]
-    
-    return :mutually_assured_destruction if third_cards.first == third_cards.last
-    return :war if first_cards.first == first_cards.last
+    return :mutually_assured_destruction if first_and_third_ranks_equal?
+    return :war if first_ranks_equal?
     :basic
+  end
+
+  private
+
+  def first_ranks_equal?
+    first_ranks = [player1.deck.rank_of_card(0), player2.deck.rank_of_card(0)]
+
+    first_ranks.first == first_ranks.last
+  end
+
+  def third_ranks_equal?
+    third_ranks = [player1.deck.rank_of_card(2), player2.deck.rank_of_card(2)]
+
+    third_ranks.first == third_ranks.last
+  end
+
+  def first_and_third_ranks_equal?
+    first_ranks_equal? && third_ranks_equal?
   end
 end

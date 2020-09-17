@@ -55,7 +55,7 @@ RSpec.describe Turn do
     expect(turn.type).to eql(:war)
   end
 
-  it "can determine if it is a :mutually_assured_destruction type" do
+  it "can determine if it is a :mutually_assured_destruction type if both players 1st and 3rd cards equal" do
     card1 = Card.new(:heart, 'Jack', 11)
     card2 = Card.new(:heart, '10', 10)
     card3 = Card.new(:heart, '9', 9)
@@ -75,5 +75,28 @@ RSpec.describe Turn do
     turn = Turn.new(player1, player2)
 
     expect(turn.type).to eql(:mutually_assured_destruction)
+  end
+
+  it "does not determine :mutually_assured_destruction type if only the 3rd cards are equal" do
+    card1 = Card.new(:heart, 'King', 13)
+    card2 = Card.new(:heart, '10', 10)
+    card3 = Card.new(:heart, '9', 9)
+    card4 = Card.new(:diamond, 'Jack', 11)
+
+    card5 = Card.new(:club, 'Jack', 11)
+    card6 = Card.new(:diamond, 'Queen', 12)
+    card7 = Card.new(:club, '9', 9)
+    card8 = Card.new(:diamond, '2', 2)
+
+    deck1 = Deck.new([card1, card2, card3, card4])
+    deck2 = Deck.new([card5, card6, card7, card8])
+
+    player1 = Player.new("Ryan", deck1)
+    player2 = Player.new("Robert", deck2)
+
+    turn = Turn.new(player1, player2)
+
+    expect(turn.type).not_to eql(:mutually_assured_destruction)
+    expect(turn.type).to eql(:basic)
   end
 end

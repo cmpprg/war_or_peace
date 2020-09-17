@@ -16,18 +16,22 @@ class Turn
   private
 
   def first_ranks_equal?
-    first_ranks = [player1.deck.rank_of_card(0), player2.deck.rank_of_card(0)]
+    first_ranks ||= card_ranks_at(0)
 
     first_ranks.first == first_ranks.last
   end
 
   def third_ranks_equal?
-    third_ranks = [player1.deck.rank_of_card(2), player2.deck.rank_of_card(2)]
+    third_ranks ||= card_ranks_at(2)
 
     third_ranks.first == third_ranks.last
   end
 
   def first_and_third_ranks_equal?
     first_ranks_equal? && third_ranks_equal?
+  end
+
+  def card_ranks_at(index)
+    [player1.deck.rank_of_card(index), player2.deck.rank_of_card(index)]
   end
 end

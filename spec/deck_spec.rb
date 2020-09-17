@@ -40,7 +40,7 @@ RSpec.describe Deck do
   it "can calculate what percent of the deck are high ranking" do
     expect(@deck.percent_high_ranking).to eql(66.67)
     @deck.remove_card
-    expect(@deck.percent_high_ranking).to eql(33.33)
+    expect(@deck.percent_high_ranking).to eql(50.0)
   end
 
 end

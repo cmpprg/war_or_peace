@@ -33,7 +33,7 @@ RSpec.describe Turn do
     expect(@turn.type).to eql(:basic)
   end
 
-  it "can determine if it is a :war type" do
+  it "can determine if it is a :war type if both players 1st cards are valued the same" do
     card1 = Card.new(:heart, 'Jack', 11)
     card2 = Card.new(:heart, '10', 10)
     card3 = Card.new(:heart, '9', 9)

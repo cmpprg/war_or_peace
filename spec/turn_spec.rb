@@ -18,4 +18,10 @@ RSpec.describe Turn do
   it "exists" do
     expect(@turn).to be_an_instance_of(Turn)
   end
+
+  it "has readable attributes" do
+    expect(@turn.player1).to be(@player1)
+    expect(@turn.player2).to be(@player2)
+    expect(@turn.spoils_of_war).to be([])
+  end
 end

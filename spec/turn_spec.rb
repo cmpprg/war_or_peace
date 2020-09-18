@@ -174,12 +174,13 @@ RSpec.describe Turn do
     expect(@turn.player1.deck.cards).to contain_exactly(@card1, @card2, @card3, @card4)
     expect(@turn.spoils_of_war).to eql([])
 
+    winner = @turn.winner
     @turn.pile_cards
 
     expect(@turn.player1.deck.cards).to contain_exactly(@card2, @card3, @card4)
     expect(@turn.spoils_of_war).to contain_exactly(@card1, @card5)
 
-    @turn.award_spoils
+    @turn.award_spoils(winner)
 
     expect(@turn.spoils_of_war).to eql([])
     expect(@turn.player1.deck.cards.length).to eql(5)

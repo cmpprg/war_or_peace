@@ -1,10 +1,12 @@
 class Turn
   attr_reader :player1, :player2, :spoils_of_war
+  attr_accessor :current_winner
 
   def initialize(player1, player2)
     @player1 = player1
     @player2 = player2
     @spoils_of_war = []
+    @current_winner = nil
   end
 
   def type
@@ -14,17 +16,18 @@ class Turn
   end
 
   def winner
-    case type
-    when :basic
-      determine_winner_if_type(:basic)
-    when :war
-      determine_winner_if_type(:war)
-    when :mutually_assured_destruction
-      'No Winner'
-    end
+      case type
+      when :basic
+        determine_winner_if_type(:basic)
+      when :war
+        determine_winner_if_type(:war)
+      when :mutually_assured_destruction
+        'No Winner'
+      end
   end
 
   def pile_cards
+    @current_winner = winner
     case type
     when :basic
       send_cards_to_spoils_of_war(1)
@@ -33,6 +36,13 @@ class Turn
     when :mutually_assured_destruction
       remove_cards(3)
     end
+  end
+
+  def award_spoils(winning_player)
+    @spoils_of_war.each do |card|
+      winning_player.deck.add_card(card)
+    end
+    @spoils_of_war.clear
   end
 
   private
@@ -62,7 +72,7 @@ class Turn
   end
 
   def determine_winner_if_type(type)
-    reutnr @player1 if compare_ranks(card_ranks_at(index_at_type(type))) == 1
+    return @player1 if compare_ranks(card_ranks_at(index_at_type(type))) == 1
     @player2
   end
 
